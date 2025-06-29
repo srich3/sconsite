@@ -25,13 +25,9 @@ A professional web application for managing Pathfinder 2e Westmarch campaigns wi
    - For production: `https://yourdomain.com/auth/callback`
 5. Copy your Client ID (Client Secret is not needed for PKCE flow)
 
-### MongoDB Atlas Setup
+### Superbase Setup
 
-1. Create a MongoDB Atlas account at [mongodb.com/atlas](https://www.mongodb.com/atlas)
-2. Create a new cluster (free tier is sufficient for development)
-3. Create a database user with read/write permissions
-4. Get your connection string from the "Connect" button
-5. Replace `<username>`, `<password>`, and `<cluster>` in the connection string
+TODO
 
 ### Environment Variables
 
@@ -43,9 +39,7 @@ A professional web application for managing Pathfinder 2e Westmarch campaigns wi
 VITE_DISCORD_CLIENT_ID=your_discord_client_id_here
 VITE_DISCORD_REDIRECT_URI=http://localhost:5173/auth/callback
 
-# MongoDB Atlas
-VITE_MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/?retryWrites=true&w=majority
-VITE_DATABASE_NAME=pathfinder_westmarch
+# Superbase
 ```
 
 ### Installation
