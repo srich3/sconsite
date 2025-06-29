@@ -24,11 +24,16 @@ export class UserService {
       console.log('Creating user with Discord ID:', userData.discordId);
 
       // Check if user already exists with this Discord ID
-      const { data: existingUser } = await supabase
+      const { data: existingUser, error: checkError } = await supabase
         .from(DATABASE_TABLES.USERS)
         .select('*')
         .eq('discord_id', userData.discordId)
         .maybeSingle();
+
+      // Log the check error for debugging
+      if (checkError) {
+        console.log('Check error (this might be normal):', checkError);
+      }
 
       if (existingUser) {
         console.log('User already exists with Discord ID:', userData.discordId);
@@ -69,6 +74,8 @@ export class UserService {
         updated_at: now
       };
 
+      console.log('Attempting to insert user:', { discord_id: newUser.discord_id, username: newUser.username });
+
       const { data, error } = await supabase
         .from(DATABASE_TABLES.USERS)
         .insert(newUser)
@@ -104,11 +111,13 @@ export class UserService {
 
       console.log('Looking up user by Discord ID:', discordId);
 
-      const { data, error } = await supabase
+      // Use a more explicit query approach
+      const { data, error, count } = await supabase
         .from(DATABASE_TABLES.USERS)
-        .select('*')
-        .eq('discord_id', discordId)
-        .maybeSingle();
+        .select('*', { count: 'exact' })
+        .eq('discord_id', discordId);
+
+      console.log('Query result:', { data, error, count });
 
       if (error) {
         console.error('Database error fetching user:', error);
@@ -118,7 +127,7 @@ export class UserService {
         };
       }
 
-      if (!data) {
+      if (!data || data.length === 0) {
         console.log('User not found with Discord ID:', discordId);
         return {
           success: false,
@@ -126,10 +135,11 @@ export class UserService {
         };
       }
 
-      console.log('User found:', data.username);
+      const user = data[0]; // Get the first (and should be only) result
+      console.log('User found:', user.username);
       return {
         success: true,
-        data: this.transformUserFromDb(data)
+        data: this.transformUserFromDb(user)
       };
     } catch (error) {
       console.error('Error fetching user by Discord ID:', error);

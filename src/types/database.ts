@@ -63,13 +63,15 @@ export interface Character {
   name: string;
   class: string;
   level: number;
+  race: string;
+  background?: string;
+  alignment?: string;
+  stats?: any; // JSON data for character stats, appearance, etc.
+  equipment?: any[]; // JSON array for equipment
+  backstory?: string;
+  notes?: string;
+  isActive: boolean;
   guildId?: string;
-  status: 'active' | 'inactive' | 'retired';
-  foundryData?: any; // JSON data from FoundryVTT
-  avatar?: string;
-  lastPlayed?: Date;
-  sessions: number;
-  achievements: string[];
   createdAt: Date;
   updatedAt: Date;
 }
