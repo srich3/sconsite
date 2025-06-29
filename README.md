@@ -62,7 +62,7 @@ A professional web application for managing Pathfinder 2e Westmarch campaigns wi
 ### 3. Environment Configuration
 
 1. Copy `.env.example` to `.env`
-2. Fill in your configuration:
+2. Fill in your configuration: 
 
 ```env
 # Discord OAuth
